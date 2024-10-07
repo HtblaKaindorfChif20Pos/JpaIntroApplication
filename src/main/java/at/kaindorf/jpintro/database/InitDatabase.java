@@ -3,6 +3,7 @@ package at.kaindorf.jpintro.database;
 import at.kaindorf.jpintro.pojos.Account;
 import at.kaindorf.jpintro.pojos.Customer;
 import at.kaindorf.jpintro.repos.AccountRepository;
+import at.kaindorf.jpintro.repos.CustomerRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import jakarta.annotation.PostConstruct;

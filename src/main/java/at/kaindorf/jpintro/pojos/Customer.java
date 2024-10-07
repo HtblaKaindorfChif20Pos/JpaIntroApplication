@@ -23,6 +23,9 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
+@NamedQueries({
+    @NamedQuery(name = "Customer.getCustomerByLastname", query = "Select c FROM Customer c WHERE c.lastname LIKE ?1")
+})
 public class Customer {
   @Id
   @GeneratedValue
