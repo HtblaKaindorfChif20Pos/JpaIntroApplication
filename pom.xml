@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>at.kaindorf</groupId>
-    <artifactId>jpintro</artifactId>
+    <artifactId>Exa_01_SpringDataJPA_5CHIF_24</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>jpintro</name>
     <description>jpintro</description>
