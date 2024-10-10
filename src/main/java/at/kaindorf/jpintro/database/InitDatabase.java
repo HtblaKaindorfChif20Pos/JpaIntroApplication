@@ -9,7 +9,10 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.TransactionSystemException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,12 +29,12 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Component
 @Slf4j
-public class InitDatabase {
+public class InitDatabase implements ApplicationRunner {
 
   private final AccountRepository accountRepo;
   private final CustomerRepository customerRepo;
 
-  @PostConstruct
+//  @PostConstruct
   public void loadCustumerFromJson() {
     InputStream jsonInputStream = getClass().getResourceAsStream("/bankAccout_customer.json");
     ObjectMapper objectMapper = new ObjectMapper()
@@ -60,10 +63,16 @@ public class InitDatabase {
       log.info("Data-structure update finished");
       customerRepo.saveAll(customerList);
       log.info("all saved to database");
+    } catch (TransactionSystemException e) {
+      log.error("Validation failed");
     } catch (IOException e) {
       log.error(e.toString());
       log.error("Reading Json-file failed");
     }
   }
 
+  @Override
+  public void run(ApplicationArguments args) throws Exception {
+    loadCustumerFromJson();
+  }
 }

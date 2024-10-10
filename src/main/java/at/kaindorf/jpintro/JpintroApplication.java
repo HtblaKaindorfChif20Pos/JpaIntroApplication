@@ -8,14 +8,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @Slf4j
-public class JpintroApplication implements ApplicationRunner {
+public class JpintroApplication {
 
   public static void main(String[] args) {
     SpringApplication.run(JpintroApplication.class, args);
   }
 
-  @Override
-  public void run(ApplicationArguments args) throws Exception {
-    log.info("Hello from run!");
-  }
 }

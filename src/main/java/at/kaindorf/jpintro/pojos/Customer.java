@@ -2,6 +2,10 @@ package at.kaindorf.jpintro.pojos;
 
 import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,6 +36,7 @@ public class Customer {
   @JsonIgnore
   private Long customerId;
   @Column(length = 100, nullable = false)
+  @Size(min = 1, max = 100)
   private String firstname;
   @Column(length = 100, nullable = false)
   private String lastname;
