@@ -46,12 +46,12 @@ public class Customer {
   @Enumerated(EnumType.STRING)
   private Gender gender;
 
-  @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+  @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
   @JoinColumn(name = "address_id")
   @JsonManagedReference
   private Address address;
 
-  @ManyToMany(cascade = CascadeType.PERSIST)
+  @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
   @JoinTable(joinColumns = { @JoinColumn(name = "customer_id")},
       inverseJoinColumns = { @JoinColumn(name = "account_id")})
   @JsonTypeInfo(use = JsonTypeInfo.Id.DEDUCTION)

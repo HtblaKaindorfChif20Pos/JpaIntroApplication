@@ -1,6 +1,7 @@
 package at.kaindorf.jpintro.repos;
 
 import at.kaindorf.jpintro.pojos.Customer;
+import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import org.springframework.data.domain.*;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.*;
+
 @SpringBootTest
 //@DataJpaTest(showSql = false)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -56,5 +59,38 @@ class CustomerRepositoryTest {
     assertEquals(expected, actual);
   }
 
+  @Test
+  @DisplayName("Test findByAddress_CityLike")
+  public void test() {
+    List<Customer> customers = customerRepo.findByAddress_CityLike("Aachen");
+    int expected = 9;
+    int actual = customers.size();
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  @DisplayName("Test lastname by exact example")
+  public void testLastnameByExample() {
+    Example<Customer> customerExample = Example.of(Customer.builder().lastname("Baumann").build());
+    List<Customer> customers = customerRepo.findAll(customerExample);
+    int expected = 16;
+    int actual = customers.size();
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  @DisplayName("Test lastname by matcher example")
+  public void testLastnameByExampleMatcher() {
+    ExampleMatcher matcher = ExampleMatcher.matchingAll()
+        .withMatcher("lastname", exact().ignoreCase())
+        .withMatcher("firstname", startsWith());
+    Example<Customer> customerExample = Example.of(Customer.builder()
+        .lastname("baumann")
+        .firstname("P").build(), matcher);
+    List<Customer> customers = customerRepo.findAll(customerExample);
+    int expected = 4;
+    int actual = customers.size();
+    assertEquals(expected, actual);
+  }
 
 }
